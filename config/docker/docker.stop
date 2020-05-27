@@ -1,0 +1,8 @@
+#!/bin/bash
+
+(cd config/docker/ && exec docker-compose -p "installments" down)
+
+if $(docker network ls | grep -q moneyrider);
+then
+    docker network rm moneyrider
+fi

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if ! $(docker network ls | grep -q moneyrider);
+then
+  docker network create \
+    --driver=bridge \
+    --subnet=192.168.88.0/16 \
+    --gateway=192.168.88.1 \
+    moneyrider
+fi
+
+(cd config/docker/ && exec docker-compose -p "installments" up -d)

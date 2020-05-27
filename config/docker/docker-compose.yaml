@@ -1,0 +1,57 @@
+version: '3'
+services:
+    application:
+        container_name: installments_app
+        build:
+            context: ./
+        ports:
+           - "9000"
+        networks:
+            moneyrider:
+                aliases:
+                    - installments.app
+                ipv4_address: 192.168.88.2
+        volumes:
+            - ../../:/var/www/app
+        working_dir: /var/www/app
+        depends_on:
+            - database
+    webserver:
+        container_name: installments_api
+        image: nginx:latest
+        ports:
+            - "80"
+        networks:
+            moneyrider:
+                aliases:
+                    - installments.api
+                ipv4_address: 192.168.88.3
+        volumes:
+            - ../../:/var/www/app
+            - ./extra/nginx:/etc/nginx/conf.d/default.conf
+        working_dir: /var/www/app
+        depends_on:
+            - application
+    database:
+        container_name: installments_db
+        image: mysql:5.7
+        ports:
+            - "3306"
+        networks:
+            moneyrider:
+                aliases:
+                    - installments.db
+                ipv4_address: 192.168.88.4
+        volumes:
+            - sqlvol:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: installments
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+volumes:
+    sqlvol:
+        driver: local
+networks:
+    moneyrider:
+        external: true

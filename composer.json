@@ -48,7 +48,10 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "app:start": "config/docker/docker.start",
+        "app:stop": "config/docker/docker.stop",
+        "app:restart": "config/docker/docker.stop && config/docker/docker.start"
     },
     "conflict": {
         "symfony/symfony": "*"
