@@ -13,6 +13,7 @@
         "symfony/yaml": "5.0.*"
     },
     "require-dev": {
+        "symfony/maker-bundle": "^1.18",
         "symfony/phpunit-bridge": "^5.0"
     },
     "config": {
